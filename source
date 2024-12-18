@@ -938,7 +938,7 @@ function OrionLib:MakeWindow(WindowConfig)
 						Size = UDim2.new(0, 20, 0, 20),
 						AnchorPoint = Vector2.new(0.5, 0.5),
 						Position = UDim2.new(0.5, 0, 0.5, 0),
-						ImageColor3 = Color3.fromRGB(255, 255, 255), -- Couleur par défaut
+						ImageColor3 = Color3.fromRGB(255, 255, 255),
 						Name = "Ico"
 					}),
 				})
@@ -960,13 +960,26 @@ function OrionLib:MakeWindow(WindowConfig)
 			
 				function Toggle:Set(Value)
 					Toggle.Value = Value
-					TweenService:Create(ToggleBox, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {BackgroundColor3 = Toggle.Value and ToggleConfig.Color or OrionLib.Themes.Default.Divider}):Play()
-					TweenService:Create(ToggleBox.Stroke, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Color = Toggle.Value and ToggleConfig.Color or OrionLib.Themes.Default.Stroke}):Play()
-					TweenService:Create(ToggleBox.Ico, TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {
-						ImageTransparency = Toggle.Value and 0 or 1,
-						Size = Toggle.Value and UDim2.new(0, 20, 0, 20) or UDim2.new(0, 8, 0, 8),
-						ImageColor3 = Toggle.Value and Color3.fromRGB(143, 174, 199) or Color3.fromRGB(255, 255, 255) -- Couleur modifiée ici
-					}):Play()
+					TweenService:Create(
+						ToggleBox, 
+						TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), 
+						{
+							BackgroundColor3 = Toggle.Value and Color3.fromRGB(143, 174, 199) or OrionLib.Themes.Default.Divider -- Couleur de fond modifiée ici
+						}
+					):Play()
+					TweenService:Create(
+						ToggleBox.Stroke, 
+						TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), 
+						{Color = Toggle.Value and ToggleConfig.Color or OrionLib.Themes.Default.Stroke}
+					):Play()
+					TweenService:Create(
+						ToggleBox.Ico, 
+						TweenInfo.new(0.3, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), 
+						{
+							ImageTransparency = Toggle.Value and 0 or 1, 
+							Size = Toggle.Value and UDim2.new(0, 20, 0, 20) or UDim2.new(0, 8, 0, 8)
+						}
+					):Play()
 					ToggleConfig.Callback(Toggle.Value)
 				end    
 			
@@ -994,8 +1007,7 @@ function OrionLib:MakeWindow(WindowConfig)
 					OrionLib.Flags[ToggleConfig.Flag] = Toggle
 				end	
 				return Toggle
-			end  
-			
+			end  		
 			function ElementFunction:AddSlider(SliderConfig)
 				SliderConfig = SliderConfig or {}
 				SliderConfig.Name = SliderConfig.Name or "Slider"
